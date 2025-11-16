@@ -69,11 +69,14 @@ def seed_data():
             seats=2,
             engine="V10",
             thumbnails=[
-                "https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=1600&auto=format&fit=crop",
+                # Realistic Huracán photos (studio/night)
+                "https://images.unsplash.com/photo-1504215680853-026ed2a45def?q=80&w=1920&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1621135802920-133df287f89d?q=80&w=1920&auto=format&fit=crop",
             ],
             gallery=[
-                "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1600&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1504215680853-026ed2a45def?q=80&w=1600&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1920&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=1920&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=1920&auto=format&fit=crop",
             ],
             features=["Apple CarPlay", "Carbon Ceramic Brakes", "GPS Tracking"],
         ),
@@ -90,11 +93,12 @@ def seed_data():
             seats=5,
             engine="V12",
             thumbnails=[
-                "https://images.unsplash.com/photo-1619767886558-efdc259cde1f?q=80&w=1600&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1619767886558-efdc259cde1f?q=80&w=1920&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1563720223185-11003d516935?q=80&w=1920&auto=format&fit=crop",
             ],
             gallery=[
-                "https://images.unsplash.com/photo-1563720223185-11003d516935?q=80&w=1600&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1549924231-f129b911e442?q=80&w=1600&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1549924231-f129b911e442?q=80&w=1920&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?q=80&w=1920&auto=format&fit=crop",
             ],
             features=["Rear-Seat Entertainment", "Starlight Headliner", "Chauffeur Ready"],
         ),
@@ -111,12 +115,34 @@ def seed_data():
             seats=4,
             engine="V8",
             thumbnails=[
-                "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1600&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1502877338535-766e1452684a?q=80&w=1920&auto=format&fit=crop",
             ],
             gallery=[
-                "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=1600&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1502872364588-894d7d6ddfab?q=80&w=1920&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=1920&auto=format&fit=crop",
             ],
             features=["Brembo Package", "Apple CarPlay", "Performance Exhaust"],
+        ),
+        Vehicle(
+            slug="ferrari-488-gtb",
+            make="Ferrari",
+            model="488 GTB",
+            year=2019,
+            category="supercar",
+            price_per_day=1399,
+            status="available",
+            horsepower=661,
+            zero_to_sixty=3.0,
+            seats=2,
+            engine="V8 Twin-Turbo",
+            thumbnails=[
+                "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?q=80&w=1920&auto=format&fit=crop",
+            ],
+            gallery=[
+                "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?q=80&w=1920&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=1920&auto=format&fit=crop",
+            ],
+            features=["Carbon Fiber Interior", "Lift System", "Race Mode"],
         ),
     ]
 
@@ -136,8 +162,11 @@ def seed_data():
             inserted["vehicles"] += 1
 
     for t in sample_reviews:
-        create_document("testimonial", t)
-        inserted["testimonials"] += 1
+        # Avoid unbounded growth – only add if exact comment not present yet
+        existing = list(db["testimonial"].find({"comment": t.comment}).limit(1)) if db else []
+        if not existing:
+            create_document("testimonial", t)
+            inserted["testimonials"] += 1
 
     return {"inserted": inserted}
 
