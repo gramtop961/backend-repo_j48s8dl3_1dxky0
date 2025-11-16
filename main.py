@@ -6,7 +6,7 @@ from pydantic import BaseModel
 from database import db, create_document, get_documents
 from schemas import Vehicle, Testimonial, Booking
 
-app = FastAPI(title="Royer Exotics API", version="1.0.0")
+app = FastAPI(title="Royer Exotics API", version="1.1.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -69,7 +69,6 @@ def seed_data():
             seats=2,
             engine="V10",
             thumbnails=[
-                # Realistic Huracán photos (studio/night)
                 "https://images.unsplash.com/photo-1504215680853-026ed2a45def?q=80&w=1920&auto=format&fit=crop",
                 "https://images.unsplash.com/photo-1621135802920-133df287f89d?q=80&w=1920&auto=format&fit=crop",
             ],
@@ -144,6 +143,134 @@ def seed_data():
             ],
             features=["Carbon Fiber Interior", "Lift System", "Race Mode"],
         ),
+        # Added premium models (SUV + Supercar + Executive)
+        Vehicle(
+            slug="lamborghini-urus",
+            make="Lamborghini",
+            model="Urus",
+            year=2022,
+            category="suv",
+            price_per_day=999,
+            status="available",
+            horsepower=641,
+            zero_to_sixty=3.1,
+            seats=5,
+            engine="V8 Twin-Turbo",
+            thumbnails=[
+                "https://images.unsplash.com/photo-1606662711622-8087b7100bd9?q=80&w=1920&auto=format&fit=crop",
+            ],
+            gallery=[
+                "https://images.unsplash.com/photo-1619767886558-efdc259cde1f?q=80&w=1920&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1606662711622-8087b7100bd9?q=80&w=1920&auto=format&fit=crop",
+            ],
+            features=["Adaptive Air Suspension", "Bang & Olufsen", "Carbon Package"],
+        ),
+        Vehicle(
+            slug="mclaren-720s",
+            make="McLaren",
+            model="720S",
+            year=2021,
+            category="supercar",
+            price_per_day=1499,
+            status="available",
+            horsepower=710,
+            zero_to_sixty=2.8,
+            seats=2,
+            engine="V8 Twin-Turbo",
+            thumbnails=[
+                "https://images.unsplash.com/photo-1606662711884-190d3d464ee5?q=80&w=1920&auto=format&fit=crop",
+            ],
+            gallery=[
+                "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?q=80&w=1920&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=1920&auto=format&fit=crop",
+            ],
+            features=["Proactive Chassis Control", "Track Telemetry", "Carbon Brakes"],
+        ),
+        Vehicle(
+            slug="ferrari-sf90-stradale",
+            make="Ferrari",
+            model="SF90 Stradale",
+            year=2022,
+            category="supercar",
+            price_per_day=1999,
+            status="available",
+            horsepower=986,
+            zero_to_sixty=2.5,
+            seats=2,
+            engine="V8 Hybrid",
+            thumbnails=[
+                "https://images.unsplash.com/photo-1619767887499-7b63a0bcbac2?q=80&w=1920&auto=format&fit=crop",
+            ],
+            gallery=[
+                "https://images.unsplash.com/photo-1605515299863-6f2fa14a3cd4?q=80&w=1920&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1619767887499-7b63a0bcbac2?q=80&w=1920&auto=format&fit=crop",
+            ],
+            features=["eManettino", "RAC-e front motors", "F1-derived tech"],
+        ),
+        Vehicle(
+            slug="mercedes-g63-amg",
+            make="Mercedes-AMG",
+            model="G63",
+            year=2021,
+            category="suv",
+            price_per_day=899,
+            status="available",
+            horsepower=577,
+            zero_to_sixty=4.5,
+            seats=5,
+            engine="V8 Twin-Turbo",
+            thumbnails=[
+                "https://images.unsplash.com/photo-1621173026648-0c70cf36c6a1?q=80&w=1920&auto=format&fit=crop",
+            ],
+            gallery=[
+                "https://images.unsplash.com/photo-1619767886513-2b29b9ae8d0f?q=80&w=1920&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1621173026648-0c70cf36c6a1?q=80&w=1920&auto=format&fit=crop",
+            ],
+            features=["Night Package", "G Manufaktur Interior", "Burmester Audio"],
+        ),
+        # Executive
+        Vehicle(
+            slug="mercedes-s580",
+            make="Mercedes-Benz",
+            model="S580",
+            year=2022,
+            category="executive",
+            price_per_day=699,
+            status="available",
+            horsepower=496,
+            zero_to_sixty=4.4,
+            seats=5,
+            engine="V8 Mild Hybrid",
+            thumbnails=[
+                "https://images.unsplash.com/photo-1550355291-bbee04a92027?q=80&w=1920&auto=format&fit=crop",
+            ],
+            gallery=[
+                "https://images.unsplash.com/photo-1549921296-3cce903855cd?q=80&w=1920&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1550355291-bbee04a92027?q=80&w=1920&auto=format&fit=crop",
+            ],
+            features=["Executive Rear", "Burmester 4D", "E-Active Body Control"],
+        ),
+        Vehicle(
+            slug="bentley-flying-spur",
+            make="Bentley",
+            model="Flying Spur",
+            year=2021,
+            category="executive",
+            price_per_day=999,
+            status="available",
+            horsepower=542,
+            zero_to_sixty=4.1,
+            seats=5,
+            engine="V8 Twin-Turbo",
+            thumbnails=[
+                "https://images.unsplash.com/photo-1617814076686-80729f08bb46?q=80&w=1920&auto=format&fit=crop",
+            ],
+            gallery=[
+                "https://images.unsplash.com/photo-1617814076686-80729f08bb46?q=80&w=1920&auto=format&fit=crop",
+                "https://images.unsplash.com/photo-1606923829579-1f5f2ca80930?q=80&w=1920&auto=format&fit=crop",
+            ],
+            features=["Rear Entertainment", "Naim Audio", "Mulliner Trim"],
+        ),
     ]
 
     sample_reviews = [
@@ -155,14 +282,12 @@ def seed_data():
     inserted = {"vehicles": 0, "testimonials": 0}
 
     for v in sample_cars:
-        # Upsert-like behavior: if slug exists, skip
         existing = list(db["vehicle"].find({"slug": v.slug}).limit(1)) if db else []
         if not existing:
             create_document("vehicle", v)
             inserted["vehicles"] += 1
 
     for t in sample_reviews:
-        # Avoid unbounded growth – only add if exact comment not present yet
         existing = list(db["testimonial"].find({"comment": t.comment}).limit(1)) if db else []
         if not existing:
             create_document("testimonial", t)
@@ -174,9 +299,8 @@ def seed_data():
 # Public API
 @app.get("/vehicles", response_model=List[Vehicle])
 def list_vehicles(category: Optional[str] = None):
-    filt = {"category": category} if category else {}
+    filt = {"category": category} if category and category != 'all' else {}
     docs = get_documents("vehicle", filt)
-    # Convert ObjectId and ensure keys exist
     clean = []
     for d in docs:
         d.pop("_id", None)
@@ -192,6 +316,30 @@ def get_vehicle(slug: str):
     d = docs[0]
     d.pop("_id", None)
     return Vehicle(**d)
+
+
+@app.get("/categories", response_model=List[str])
+def get_categories():
+    cats: List[str] = []
+    try:
+        if db is not None:
+            cats = sorted(list(db["vehicle"].distinct("category")))
+        else:
+            cats = []
+    except Exception:
+        cats = []
+    # Always include canonical order
+    order = ["all", "supercar", "suv", "executive", "muscle"]
+    # Merge keeping order
+    merged = []
+    for c in order:
+        if c == "all" or c in cats:
+            merged.append(c)
+    # Add any unexpected categories at the end
+    for c in cats:
+        if c not in merged:
+            merged.append(c)
+    return merged
 
 
 class BookingResponse(BaseModel):
